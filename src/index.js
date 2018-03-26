@@ -1,5 +1,5 @@
 const express = require('express');
-//const { get } = require('axios');
+const { get } = require('axios');
 const moment = require('moment');
 const fs = require('fs');
 const exphbs  = require('express-handlebars');
@@ -32,29 +32,10 @@ app
 		const { data: { users: items} } = await get(URL);
 		r.res.render('list', {title: 'Login list', items});
 	})*/
-	.get('/listhb', r =>
-  		r.res.render('listhb',{
-  								users:[
-  										{
-  											login:'student',
-  											password:'tneduts'
-  										},
-  										{
-  											login:'myuser',
-  											password:'mypas'
-  										},
-  										{
-  											login:'teacher',
-  											password:'qq'
-  										},
-  										{
-  											login:'myking',
-  											password:'myqueen'
-  										}
-  									   ]
-  								}
-  					)
-	)
+	.get('/listhb', async r => {
+      const {data: {users: items}} = await get(URL);
+      r.res.render('listhb', {users: items})
+     })
 	
 	/*.get('/usershb' async r => {
   		let template = Handlebars.compile(document.querySelector('#t').textContent),
